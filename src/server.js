@@ -15,16 +15,15 @@ fastify.register(cors);
 
 fastify.get('/:id', async (request, reply) => {
   const { id } = request.params;
-  let alias = 'not-found';
+  let toUrl = process.env.LANDING_URL;
 
   const { data: response } = await axios.get(`${baseApiUrl}/tenants/${id}/alias`);
 
   if (response.success) {
-    alias = response.data;
+    toUrl = process.env.QR_MENU_URL.replaceAll('{alias}', alias);
   }
 
-  const qrMenuUrl = process.env.QR_MENU_URL.replaceAll('{alias}', alias);
-  return reply.redirect(qrMenuUrl);
+  return reply.redirect(toUrl);
 });
 
 const port = process.env.PORT || 7000;

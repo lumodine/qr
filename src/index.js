@@ -4,6 +4,7 @@ require('dotenv')
 const requiredEnvs = [
     'NODE_ENV',
     'PORT',
+    'LANDING_URL',
     'API_URL',
     'QR_MENU_URL',
 ];
