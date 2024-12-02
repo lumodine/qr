@@ -20,6 +20,8 @@ fastify.get('/:id', async (request, reply) => {
   const { data: response } = await axios.get(`${baseApiUrl}/tenants/${id}/alias`);
 
   if (response.success) {
+    const alias = response.data;
+    
     toUrl = process.env.QR_MENU_URL.replaceAll('{alias}', alias);
   }
 
