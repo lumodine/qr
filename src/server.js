@@ -15,6 +15,7 @@ fastify.register(cors);
 
 fastify.get('/:id', async (request, reply) => {
   const { id } = request.params;
+  const { event } = request.query;
   let toUrl = process.env.LANDING_URL;
 
   const { data: response } = await axios.get(`${baseApiUrl}/tenants/${id}/alias`);
@@ -24,6 +25,9 @@ fastify.get('/:id', async (request, reply) => {
     
     toUrl = process.env.QR_MENU_URL.replaceAll('{alias}', alias);
   }
+
+  // TODO: log event
+  console.log('event', event);
 
   return reply.redirect(toUrl);
 });
