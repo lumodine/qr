@@ -26,7 +26,7 @@ fastify.get('/:id', async (request, reply) => {
     toUrl = process.env.QR_MENU_URL.replaceAll('{alias}', alias);
   }
 
-  // TODO: log event
+  // TODO: log event - user ip - user agent - tenant id - alias
   console.log('event', event);
 
   return reply.redirect(toUrl);
