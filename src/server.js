@@ -22,12 +22,20 @@ fastify.get('/:id', async (request, reply) => {
 
   if (response.success) {
     const alias = response.data;
-    
-    toUrl = process.env.QR_MENU_URL.replaceAll('{alias}', alias);
-  }
 
-  // TODO: log event - user ip - user agent - tenant id - alias
-  console.log('event', event);
+    toUrl = process.env.QR_MENU_URL.replaceAll('{alias}', alias);
+
+    if (event) {
+      try {
+        await axios.post(`${baseApiUrl}/events`, {
+          tenant: id,
+          type: event,
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }
 
   return reply.redirect(toUrl);
 });
