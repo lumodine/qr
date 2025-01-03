@@ -1,0 +1,31 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Connect SSH and Deploy Project
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          port: ${{ secrets.SSH_PORT }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          allenvs: true
+          script_stop: true
+          script: |
+            cd ${{ secrets.SSH_PROJECT_FOLDER }}
+
+            git pull
+
+            npm i
+            
+            bash ./pm2.bash
