@@ -41,11 +41,15 @@ fastify.get('/:id', async (request, reply) => {
 });
 
 const port = process.env.PORT || 7000;
-fastify.listen({ port, host: '0.0.0.0' }, async (err, address) => {
-  if (err) {
+
+const start = async () => {
+  try {
+    const address = await fastify.listen({ port, host: '0.0.0.0' });
+    console.log(`Server listening on ${address}`);
+  } catch (err) {
     fastify.log.error(err);
     process.exit(1);
   }
+};
 
-  console.log(`Server listening on ${address}`);
-});
+start();
