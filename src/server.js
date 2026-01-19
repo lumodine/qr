@@ -1,13 +1,13 @@
-const fastifyOptions = {
-  logger: (process.env.NODE_ENV === 'development'),
-  ignoreTrailingSlash: true,
-  ignoreDuplicateSlashes: true,
-  trustProxy: true,
-};
-
 const baseApiUrl = process.env.API_URL;
 
-const fastify = require('fastify')(fastifyOptions);
+const fastify = require('fastify')({
+  logger: (process.env.NODE_ENV === 'development'),
+  routerOptions: {
+    ignoreTrailingSlash: true,
+    ignoreDuplicateSlashes: true,
+    trustProxy: true,
+  },
+});
 const cors = require('@fastify/cors');
 const axios = require('axios');
 
